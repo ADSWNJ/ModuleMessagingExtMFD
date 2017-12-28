@@ -1,4 +1,5 @@
-// =====================================================================//
+// =========================================================================
+//
 //	ModuleMessagingExtMFD
 //	=====================
 //
@@ -8,7 +9,7 @@
 //	Description:
 //
 //	This MFD monitors activity inside MMExt2. It does not need to run
-//  to allow other modules to communicate ... it is purely monitoring. 
+//  to allow other modules to communicate ... it is purely a monitoring app. 
 //
 //	Copyright Notice: 
 //
@@ -36,7 +37,7 @@
 //	Release History:
 //
 //  V1.00	Initial Release
-// ======================================================================
+// =========================================================================
 
 #define STRICT
 #define ORBITER_MODULE
@@ -53,6 +54,9 @@
 // Global variables
 
 ModuleMessagingExtMFD_GCore *g_SC = nullptr;    // points to the static persistence core
+char *g_moduleName = "MMExtMFD";
+char *g_moduleVersion = "1.0";
+char *g_moduleCompileDate = __DATE__;
 
 // ====================================================================================================================
 // MFD class implementation
@@ -66,7 +70,6 @@ ModuleMessagingExtMFD::ModuleMessagingExtMFD (DWORD w, DWORD h, VESSEL *vessel, 
     GC = g_SC;
   }
   GC = g_SC;
-
 
   VC = (ModuleMessagingExtMFD_VCore*) GC->P.findVC(vessel);		  // Locate our vessel core
   if (!VC) {

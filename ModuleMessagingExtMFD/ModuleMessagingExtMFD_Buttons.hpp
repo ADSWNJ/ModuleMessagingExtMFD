@@ -12,8 +12,8 @@
 
 
 
-#ifndef _SCRAM_ATT_BUTTON_CLASS
-#define _SCRAM_ATT_BUTTON_CLASS
+#ifndef _MMExt2_BUTTON_CLASS
+#define _MMExt2_BUTTON_CLASS
 #include "MFDButtonPage.hpp"
 
 class ModuleMessagingExtMFD;
@@ -26,5 +26,5 @@ class ModuleMessagingExtMFD_Buttons : public MFDButtonPage<ModuleMessagingExtMFD
     bool SearchForKeysInOtherPages() const;
   private:
 };
-#endif // _SCRAM_ATT_BUTTON_CLASS
+#endif // _MMExt2_BUTTON_CLASS
 

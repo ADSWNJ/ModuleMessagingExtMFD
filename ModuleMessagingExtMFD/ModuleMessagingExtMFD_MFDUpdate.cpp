@@ -23,153 +23,38 @@ bool ModuleMessagingExtMFD::Update(oapi::Sketchpad *skp)
   //LC->skp->SetTextColor(CLR_DEF);
 
   if (LC->showMessage) return DisplayMessageMode();
+  skpTitle("MMExtMFD");
 
-  int l = 3;
+  int l = 2;
+  if (GC->mmVer != "") {
+    skpFormatText(0, l++, GC->mmVer.c_str());
+  } else {
+    skpFormatText(0, l++, "Core not installed");
+    return true;
+  }
+
+  if (LC->mode == 0) {
+    skpFormatText(0, l++, "Data:");
+  } else {
+    skpFormatText(0, l++, "Activity:");
+  }
+  unsigned int *p = (LC->mode == 0 ? &(GC->ofsV) : &(GC->ofsA));
+  const vector<string> *vec1 = (LC->mode == 0 ? &(GC->mmDumpVes) : &(GC->mmActL1));
+  const vector<string> *vec2 = (LC->mode == 0 ? &(GC->mmDumpModVarTyp) : &(GC->mmActL2));
+
+  unsigned int i;
+  char buf[128];
+
+  l = 5;
+  for (i = *p; i < vec1->size() && i < *p + 10; i++) {
+    sprintf(buf, "%2d. %s", i+1, (*vec1)[i].c_str());
+    skpFormatText(0, l++, buf);
+    sprintf(buf, "    %s", (*vec2)[i].c_str());
+    skpFormatText(0, l++, buf);
+  }
+  if (l>=24) skpFormatText(0, 25, "...");
+
   return true;
-
-/*  if (vdata->burnArmed) {
-    skpTitle("ModuleMessagingExtMFD: ORBIT (PLAN)");
-  } else {
-    skpTitle("ModuleMessagingExtMFD: ORBIT (LIVE)");
-  }
-
-  int circrad = (int)(W / 120);
-  int enc_x, enc_y;
-
-  ModuleMessagingExtMFDUniverse* LU = GC->LU;
-  ModuleMessagingExtMFDUniverse::ModuleMessagingExtMFDUniverse_LP* LP = &LU->LP;
-  ModuleMessagingExtMFD_vdata *lvd = &LU->vdata[GC->LU->act][VC->vix];
-  ModuleMessagingExtMFD_orb_disp *lod = &LU->l_orb[GC->LU->act];
-  if (LU->orbScale[LU->orbProj] == 0.0) return true;
-
-  skpFormatText(0, l, "LP: %s", LP->name);
-  skpFormatText(4, l++, "FRM: %s", LU->body[lvd->refEnt].name);
-  skpFmtEngText(0, l++, "SC: %.0f", "m", LU->orbScale[LU->orbProj], 1);
-
-  char *PrjTxt[3] = { "Std X-Z", "X-Y", "Z-Y" };
-  char FocTxt[7][32] = { "", "", "Ves Orbit", "Ves Enc", "Ves Burn", "LP", "Rot"};
-  strcpy(FocTxt[0], LU->body[LP->maj].name);
-  strcpy(FocTxt[1], LU->body[LP->min].name);
-  char locked[6] = "";
-  if (LU->orbFocRot || LU->orbFocLock || LU->orbFocCtr || LU->orbFocSca) {
-    strcat(locked, "(");
-    if (LU->orbFocRot) strcat(locked, "R");
-    if (LU->orbFocLock) strcat(locked, "L");
-    if (LU->orbFocCtr) strcat(locked, "C");
-    if (LU->orbFocSca) strcat(locked, "S");
-    strcat(locked, ")");
-  }
-  skpFormatText(0, 24, "FOC: %s %s", FocTxt[LU->orbFocus], locked);
-  skpFormatText(4, 24, "PRJ: %s", PrjTxt[LU->orbProj]);
-  if (lvd->alarm_state == 0) {
-    skpFormatText(0, 25, "ZM: %d", -LU->orbZoom);
-    skpFmtEngText(2, 25, "H: %.0f", "m", LU->orbPanHoriz[LU->orbProj] * pow(1.1, (double)LU->orbZoom), 1);
-    skpFmtEngText(4, 25, "V: %.0f", "m", LU->orbPanVert[LU->orbProj] * pow(1.1, (double)LU->orbZoom), 1);
-  } else   if (lvd->alarm_state == 2) {
-    char buf2[256];
-    skpColor(CLR_WARN);
-    if (lvd->alarm_body == 1) {
-      sprintf(buf2, "ALARM: %s reentry in %%.1f", LU->body[lvd->alarm_body].name);
-    } else {
-      sprintf(buf2, "ALARM: %s impact in %%.1f", LU->body[lvd->alarm_body].name);
-    }
-    skpFmtEngText(0, 25, buf2, "s", LU->s4i[GC->LU->act][lvd->alarm_ix].sec - oapiGetSimTime());
-    skpColor(CLR_DEF);
-  } else if (lvd->alarm_state == 1) {
-    char buf2[256];
-    skpColor(CLR_HI);
-    sprintf(buf2, "WARN: %s proximity in %%.1f", LU->body[lvd->alarm_body].name);
-    skpFmtEngText(0, 25, buf2, "s", LU->s4i[GC->LU->act][lvd->alarm_ix].sec - oapiGetSimTime());
-    skpColor(CLR_DEF);
-  }
-
-  if (!GC->LU->s4i_valid) return true;
-  if (lvd->orb_plot.size() != GC->LU->orbPlotCount[GC->LU->act]) return true;
-
-
-
-
-  for (int s = 0; s < ORB_MAX_LINES; s++) {
-    if (LP->plotix[s] == -1) break;
-    for (unsigned int i = 0; i < GC->LU->orbPlotCount[GC->LU->act]; i++) {
-      iv[i].x = (long)((double)W * lod->orb_plot[s][i].x);
-      iv[i].y = (long)((double)H * lod->orb_plot[s][i].y);
-    }
-    if (LP->plotix[s] != -2) {
-      LC->skp->SetPen(GC->LU->draw->GetPen(LU->body[LP->plotix[s]].name));
-
-    } else {
-      LC->skp->SetPen(GC->LU->draw->GetPen("LP"));
-    }
-
-    LC->skp->MoveTo((int)((double)W * lod->orb_plot[s][1].x), (int)((double)H * lod->orb_plot[s][1].y));
-    LC->skp->Polyline(iv, GC->LU->orbPlotCount[GC->LU->act]);
-
-    if (LP->plotix[s] != -2) {
-      LC->skp->SetPen(GC->LU->draw->GetPen(LU->body[LP->plotix[s]].name, true));
-
-    } else {
-      LC->skp->SetPen(GC->LU->draw->GetPen("LP", true));
-    }
-
-    if (lvd->enc_ix >= 0) {
-      if (abs(lvd->orb_plot_body_enc[s].x - lvd->orb_plot_origin.x) >= 0.00 ||
-        abs(lvd->orb_plot_body_enc[s].y - lvd->orb_plot_origin.y) >= 0.00) {
-
-        enc_x = (int)((double)W * lvd->orb_plot_body_enc[s].x);
-        enc_y = (int)((double)H * lvd->orb_plot_body_enc[s].y);
-        LC->skp->Ellipse(enc_x - circrad, enc_y - circrad, enc_x + circrad, enc_y + circrad);
-
-        if (LP->plotix[s] != -2) {
-          // Determine Body PROX limit and IMPACT LIMIT
-          double proxLim = GC->LU->body[LP->plotix[s]].proxWarnDist;
-          double impactLim = GC->LU->body[LP->plotix[s]].impactWarnDist;
-          double circradKM = (double)circrad / (double)W * GC->LU->orbScale[GC->LU->orbProj];
-          if (circradKM < impactLim) {
-            int bodyRadPx = (int)((double)W * impactLim / GC->LU->orbScale[GC->LU->orbProj] + 0.5);
-            double rf = bodyRadPx;
-            for (int xscan = 0; xscan <= bodyRadPx; xscan++) {
-              double xf = (double) xscan;
-              double ang = asin(xf / rf);
-              double yf = rf * cos(ang) + 0.5;
-              int yof = (int) yf;
-              LC->skp->Line(enc_x + xscan, enc_y + yof, enc_x + xscan, enc_y - yof);
-              LC->skp->Line(enc_x - xscan, enc_y + yof, enc_x - xscan, enc_y - yof);
-            }
-          }
-        }
-      }
-    }     
-  }
-
-  for (unsigned int i = 0; i < GC->LU->orbPlotCount[GC->LU->act]; i++) {
-    iv[i].x = (long)((double)W * lvd->orb_plot[i].x);
-    iv[i].y = (long)((double)H * lvd->orb_plot[i].y);
-  }
-
-  if (vdata->burnArmed) {
-    LC->skp->SetPen(GC->LU->draw->GetPen("VP"));
-  } else {
-    LC->skp->SetPen(GC->LU->draw->GetPen("VL"));
-  }
-
-  LC->skp->MoveTo((long)((double)W * lvd->orb_plot[0].x), (long)((double)H * lvd->orb_plot[0].y));
-  LC->skp->Polyline(iv, GC->LU->orbPlotCount[GC->LU->act]);
-  //LC->skp->Line((int)((double)W * lvd->orb_plot_origin.x), (int)((double)H *lvd->orb_plot_origin.y), (int)((double)W * lvd->orb_plot[0].x), (long)((double)H * lvd->orb_plot[0].y));
-
-  if (vdata->burnArmed) {
-    LC->skp->SetPen(GC->LU->draw->GetPen("VP", true));
-  } else {
-    LC->skp->SetPen(GC->LU->draw->GetPen("VL", true));
-  }
-  if (lvd->enc_ix >= 0) {
-    enc_x = (int)((double)W * lvd->orb_plot_ves_enc.x);
-    enc_y = (int)((double)H * lvd->orb_plot_ves_enc.y);
-    LC->skp->Ellipse(enc_x - circrad, enc_y - circrad, enc_x + circrad, enc_y + circrad);
-  }
-
-  return true; */
-
 };
 
 

@@ -21,8 +21,8 @@
 
 using namespace std;
 
-#ifndef _SCRAM_ATT_LCORE_H
-#define _SCRAM_ATT_LCORE_H
+#ifndef _MMExt2MFD_LCORE_H
+#define _MMExt2MFD_LCORE_H
 
 //+++++
 // Local Persistence core. One of these is instantiated per Vessel AND MFD panel location. Local defaults for that combination.
@@ -44,7 +44,7 @@ class ModuleMessagingExtMFD_LCore {
     bool okMessagePage;
     string Message;
     int mode;
-    int PrvNxtMode;                                         // = 0 for LP, 1 for frame, 2 = focus
+
 
     oapi::Sketchpad *skp; // points to local sketchpad for this MFD and vessel
     int skpLoB;           // Lowest precision for skp eng numnber formatting
@@ -56,4 +56,4 @@ class ModuleMessagingExtMFD_LCore {
 };
 
 
-#endif // _SCRAM_ATT_CORE_CLASSES
+#endif // _MMExt2MFD_CORE_CLASSES

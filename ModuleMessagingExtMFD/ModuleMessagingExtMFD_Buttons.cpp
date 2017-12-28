@@ -20,14 +20,14 @@ ModuleMessagingExtMFD_Buttons::ModuleMessagingExtMFD_Buttons()
     // Orbit Mode
     static const MFDBUTTONMENU mnu0[] =
     {
-      {"AP On/Off", 0, 'A'},
-      {"Tgt DP Down", 0, 'D'},
-      {"Tgt DP Up", 0, 'U'}
+      {"Mode", 0, 'M'},
+      {"Prev", 0, 'P'},
+      {"Next", 0, 'N'}
     };
     RegisterPage(mnu0, sizeof(mnu0) / sizeof(MFDBUTTONMENU));
-    RegisterFunction("AP", OAPI_KEY_M, &ModuleMessagingExtMFD::Button_AP);
-    RegisterFunction("DN", OAPI_KEY_T, &ModuleMessagingExtMFD::Button_DN);
-    RegisterFunction("UP", OAPI_KEY_R, &ModuleMessagingExtMFD::Button_UP);
+    RegisterFunction("MOD", OAPI_KEY_M, &ModuleMessagingExtMFD::Button_MOD);
+    RegisterFunction("PRV", OAPI_KEY_P, &ModuleMessagingExtMFD::Button_PRV);
+    RegisterFunction("NXT", OAPI_KEY_N, &ModuleMessagingExtMFD::Button_NXT);
 
 
     // LP Mode

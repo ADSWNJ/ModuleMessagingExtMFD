@@ -1,7 +1,7 @@
 // ==============================================================
 //
-//	ModuleMessagingExtMFD Headers
-//	====================
+//	ModuleMessagingExtMFD Header
+//	============================
 //
 //	Copyright (C) 2016-2017	Andrew (ADSWNJ) Stokes
 //                   All rights reserved
@@ -11,8 +11,8 @@
 // ==============================================================
 
 
-#ifndef __SCRAM_ATT_H
-#define __SCRAM_ATT_H
+#ifndef __MMExt2MFD_H
+#define __MMExt2MFD_H
 
 #include "ModuleMessagingExtMFD_GCore.hpp"   
 #include "ModuleMessagingExtMFD_VCore.hpp" 
@@ -35,9 +35,10 @@ public:
   bool DisplayMessageMode();
 
   // Button Press Handlers
-  void Button_AP();
-  void Button_DN();
-  void Button_UP();
+  void Button_MOD();
+  void Button_PRV();
+  void Button_NXT();
+
 
   // Persistence functions
   void ReadStatus(FILEHANDLE scn);
@@ -65,4 +66,4 @@ protected:
 
 };
 
-#endif // !__SCRAM_ATT_H
+#endif // !__MMExt2MFD_H

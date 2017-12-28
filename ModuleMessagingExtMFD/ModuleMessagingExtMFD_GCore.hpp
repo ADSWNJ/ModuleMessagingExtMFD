@@ -16,13 +16,12 @@
 #include "orbitersdk.h"
 #include "ModuleMessagingExtMFD_Buttons.hpp"
 #include "MFDPersist.hpp"
-#include <EnjoLib/ModuleMessagingExtBase.hpp>
-#include <EnjoLib/ModuleMessagingExtPut.hpp>
-#include <EnjoLib/ModuleMessagingExt.hpp>
+#include "MMExt2_Advanced.hpp"
+
 using namespace std;
 
-#ifndef _SCRAM_ATT_GCORE_H
-#define _SCRAM_ATT_GCORE_H
+#ifndef _MMExt2MFD_GCORE_H
+#define _MMExt2MFD_GCORE_H
 
 
 //+++++
@@ -38,11 +37,18 @@ class ModuleMessagingExtMFD_GCore {
     ~ModuleMessagingExtMFD_GCore();
     MFDPersist P;
 
-
-  private:
+    MMExt2::Advanced mm;
+    vector<string> mmDumpVes;
+    vector<string> mmDumpModVarTyp;
+    vector<string> mmActL1;
+    vector<string> mmActL2;
+    string mmVer;
+    bool coreFound; 
+    unsigned int ofsV;
+    unsigned int ofsA;
+private:
     double coreSimT;
-    double coreSimDT;
 };
 
 
-#endif // _SCRAM_ATT_GCORE_H
+#endif // _MMExt2MFD_GCORE_H

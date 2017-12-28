@@ -15,14 +15,13 @@
 #include "ModuleMessagingExtMFD_Buttons.hpp"
 #include "MFDPersist.hpp"
 #include "ModuleMessagingExtMFD_GCore.hpp"
-#include "ModuleMessagingExtMFD_AP.hpp"
 #include <list>
 #include <string>
 #include <vector>
 using namespace std;
 
-#ifndef _SCRAM_ATT_VCORE_H
-#define _SCRAM_ATT_VCORE_H
+#ifndef _MMExt2MFD_VCORE_H
+#define _MMExt2MFD_VCORE_H
 
 //+++++
 // Vessel Persistence core. One of these is instantiated per Vessel flown with this MFD up.
@@ -40,18 +39,13 @@ class ModuleMessagingExtMFD_VCore {
 
 		// Add Vessel data here
     VESSEL *v;
-    int vix; // Vessel index in LU
-
-    class ModuleMessagingExtMFD_AP ap;
-
-    int apState;    //  0 = inactive, 1 = Ready (armed), 2 = Point, 3 = Burn
 
 
   private:
 };
 
 
-#endif // _SCRAM_ATT_VCORE_H
+#endif // _MMExt2MFD_VCORE_H
 
 
 

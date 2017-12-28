@@ -74,7 +74,7 @@
     <ClInclude Include="ModuleMessagingExtMFD_GCore.hpp" />
     <ClInclude Include="ModuleMessagingExtMFD_LCore.hpp" />
     <ClInclude Include="ModuleMessagingExtMFD_VCore.hpp" />
-    <ClInclude Include="ModuleMessagingExtMFD_Interface.hpp" />
+    <ClInclude Include="ModuleMessagingExt_Interface.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DisplayEngUnitFunctions.cpp" />
@@ -87,7 +87,6 @@
     <ClCompile Include="ModuleMessagingExtMFD_MFDUpdate.cpp" />
     <ClCompile Include="ModuleMessagingExtMFD_SketchpadFunctions.cpp" />
     <ClCompile Include="ModuleMessagingExtMFD_VCore.cpp" />
-    <ClCompile Include="ModuleMessagingExtMFD_Interface.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="gpl-3_0.txt" />

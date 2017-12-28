@@ -12,7 +12,6 @@
 
 #include "ModuleMessagingExtMFD_GCore.hpp"
 #include "ModuleMessagingExtMFD_VCore.hpp"
-#include "ParseFunctions.h"
 #include <stdio.h>
 #include <math.h>
 #include <string.h>

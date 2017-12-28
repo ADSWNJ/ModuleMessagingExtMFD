@@ -1,7 +1,7 @@
 // ==============================================================
 //
 //	ModuleMessagingExtMFD (Button Handling Code)
-//	===============================
+//	============================================
 //
 //	Copyright (C) 2016-2017	Andrew (ADSWNJ) Stokes
 //                   All rights reserved
@@ -43,20 +43,26 @@ bool ModuleMessagingExtMFD::ConsumeKeyBuffered (DWORD key) {
 // MFD Button Handler Callbacks
 //
 
-// AP = AutoPilot On/Off
-void ModuleMessagingExtMFD::Button_AP() {
-
+// MOD = Mode Select
+void ModuleMessagingExtMFD::Button_MOD() {
+  LC->mode = 1 - LC->mode;
   return;
 };
 
-// DN = Reduce Dyn Pressure Target
-void ModuleMessagingExtMFD::Button_DN() {
-
+// PRV = Last Page (Vars)
+void ModuleMessagingExtMFD::Button_PRV() {
+  unsigned int *p = (LC->mode == 0 ? &(GC->ofsV) : &(GC->ofsA));
+  const vector<string> *vec = (LC->mode == 0 ? &(GC->mmDumpVes) : &(GC->mmActL1));
+  if (*p > 0) *p -= 10;
+  while (*p >= vec->size()) *p -= 10;
   return;
 };
 
-// UP = Increase Dyn Pressure Target
-void ModuleMessagingExtMFD::Button_UP() {
-
+// NXT = Next Page (Vars)
+void ModuleMessagingExtMFD::Button_NXT() {
+  unsigned int *p = (LC->mode == 0 ? &(GC->ofsV) : &(GC->ofsA));
+  const vector<string> *vec = (LC->mode == 0 ? &(GC->mmDumpVes) : &(GC->mmActL1));
+  *p += 10;
+  while (*p >= vec->size()) *p -= 10;
   return;
 };

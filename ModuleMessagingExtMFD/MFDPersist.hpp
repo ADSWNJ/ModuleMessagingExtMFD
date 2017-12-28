@@ -3,7 +3,7 @@
 //	MFDPersist
 //	==========
 //
-//	Copyright (C) 2013-2016	Andrew (ADSWNJ) Stokes
+//	Copyright (C) 2013-2017	Andrew (ADSWNJ) Stokes
 //                   All rights reserved
 //
 //	Description, Credits and Copyright Notice: see MFDPersist.cpp
