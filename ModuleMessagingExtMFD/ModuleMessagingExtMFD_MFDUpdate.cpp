@@ -52,7 +52,7 @@ bool ModuleMessagingExtMFD::Update(oapi::Sketchpad *skp)
     sprintf(buf, "    %s", (*vec2)[i].c_str());
     skpFormatText(0, l++, buf);
   }
-  if (l>=24) skpFormatText(0, 25, "...");
+  if (vec1->size()>*p + 10) skpFormatText(0, 25, "...");
 
   return true;
 };

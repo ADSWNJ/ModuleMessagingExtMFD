@@ -17,7 +17,7 @@ ModuleMessagingExtMFD_GCore::ModuleMessagingExtMFD_GCore() : mm("MMExtMFD") {
   string ver;
   mmVer = "";
   coreFound = mm.GetVersion(&ver);
-  if (coreFound) mmVer = string() + "Using: " + ver;
+  if (coreFound) mmVer = string() + "Core: " + ver;
   return;
 }
 
