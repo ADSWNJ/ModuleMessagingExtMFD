@@ -47,7 +47,7 @@ bool ModuleMessagingExtMFD::Update(oapi::Sketchpad *skp)
 
   l = 5;
   for (i = *p; i < vec1->size() && i < *p + 10; i++) {
-    sprintf(buf, "%2d. %s", i+1, (*vec1)[i].c_str());
+    sprintf(buf, "%2u. %s", i+1, (*vec1)[i].c_str());
     skpFormatText(0, l++, buf);
     sprintf(buf, "    %s", (*vec2)[i].c_str());
     skpFormatText(0, l++, buf);
