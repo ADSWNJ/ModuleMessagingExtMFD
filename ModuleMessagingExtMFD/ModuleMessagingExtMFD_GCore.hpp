@@ -3,7 +3,7 @@
 //	ModuleMessagingExtMFD (Global Core Header)
 //	=============================
 //
-//	Copyright (C) 2016-2017	Andrew (ADSWNJ) Stokes
+//	Copyright (C) 2016-2018	Andrew (ADSWNJ) Stokes
 //                   All rights reserved
 //
 //	See ModuleMessagingExtMFD.cpp
@@ -38,8 +38,8 @@ class ModuleMessagingExtMFD_GCore {
     MFDPersist P;
 
     MMExt2::Advanced mm;
-    vector<string> mmDumpVes;
-    vector<string> mmDumpModVarTyp;
+    vector<string> mmDumpVesTyp;
+    vector<string> mmDumpModVar;
     vector<string> mmActL1;
     vector<string> mmActL2;
     string mmVer;

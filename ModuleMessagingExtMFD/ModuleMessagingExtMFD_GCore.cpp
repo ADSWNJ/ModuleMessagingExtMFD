@@ -3,7 +3,7 @@
 //	ModuleMessagingExtMFD (Core Persistence)
 //	========================================
 //
-//	Copyright (C) 2016-2017	Andrew (ADSWNJ) Stokes
+//	Copyright (C) 2016-2018	Andrew (ADSWNJ) Stokes
 //                   All rights reserved
 //
 //	See ModuleMessagingExtMFD.cpp
@@ -35,29 +35,26 @@ void ModuleMessagingExtMFD_GCore::corePreStep(double simT,double simDT,double mj
     coreSimT = simT;
     int ix = 0;
     char typ;
-    string mod;
-    string var;
-    string vesName;
-    VESSEL *ves;
-    string msg;
-    list<string> mmListVes;
-    list<string> mmListModVarTyp;
-    int siz;
-    while (mm.Find("*", "*", &ix, &typ, &mod, &var, &ves, false, NULL)) {
-      msg = string() + ves->GetName() + " (" + typ + ")";
-      mmListVes.push_back(msg.c_str());
-      mmListModVarTyp.push_back(mod + ":" + var);
+    string mod, var, vesName, msg;
+    OBJHANDLE ovh;
+    list<string> mmListVesTyp, mmListModVar;
+    while (mm.Find(&typ, &mod, &var, &ovh, &ix, "*", "*", NULL, false)) {
+      msg = string() + oapiGetVesselInterface(ovh)->GetName() + " (" + typ + ")";
+      mmListVesTyp.push_back(msg);
+      mmListModVar.push_back(mod + ":" + var);
     }
-    siz = mmListVes.size();
-    mmDumpVes.resize(mmListVes.size());
-    mmDumpModVarTyp.resize(mmListVes.size());
+
+    int siz;
+    siz = mmListVesTyp.size();
+    mmDumpVesTyp.resize(mmListVesTyp.size());
+    mmDumpModVar.resize(mmListVesTyp.size());
     int i = 0;
-    for (auto& e : mmListVes) {
-      mmDumpVes[i++] = e;
+    for (auto& e : mmListVesTyp) {
+      mmDumpVesTyp[i++] = e;
     }
     i = 0;
-    for (auto& e : mmListModVarTyp) {
-      mmDumpModVarTyp[i++] = e;
+    for (auto& e : mmListModVar) {
+      mmDumpModVar[i++] = e;
     }
     mmActL1.clear();
     mmActL2.clear();
@@ -66,7 +63,7 @@ void ModuleMessagingExtMFD_GCore::corePreStep(double simT,double simDT,double mj
     char rfunc;
     bool rsucc;
 
-    while (mm.GetLog(ix++, &rfunc, &rsucc, &rcli, &rmod, &rvar, &rves)) {
+    while (mm.GetLog(&rfunc, &rcli, &rmod, &rvar, &rves, &rsucc, &ix)) {
       switch (rfunc) {
       case 'P': act = "Put"; break;
       case 'G': act = "Get"; break;

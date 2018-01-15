@@ -3,7 +3,7 @@
 //	ModuleMessagingExtMFD Header
 //	============================
 //
-//	Copyright (C) 2016-2017	Andrew (ADSWNJ) Stokes
+//	Copyright (C) 2016-2018	Andrew (ADSWNJ) Stokes
 //                   All rights reserved
 //
 //	See ModuleMessagingExtMFD.cpp
@@ -38,6 +38,7 @@ public:
   void Button_MOD();
   void Button_PRV();
   void Button_NXT();
+  void Button_RST();
 
 
   // Persistence functions

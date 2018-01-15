@@ -3,7 +3,7 @@
 //	ModuleMessagingExtMFD (Button Handling Code)
 //	============================================
 //
-//	Copyright (C) 2016-2017	Andrew (ADSWNJ) Stokes
+//	Copyright (C) 2016-2018	Andrew (ADSWNJ) Stokes
 //                   All rights reserved
 //
 //	See ModuleMessagingExtMFD.cpp
@@ -52,7 +52,7 @@ void ModuleMessagingExtMFD::Button_MOD() {
 // PRV = Last Page (Vars)
 void ModuleMessagingExtMFD::Button_PRV() {
   unsigned int *p = (LC->mode == 0 ? &(GC->ofsV) : &(GC->ofsA));
-  const vector<string> *vec = (LC->mode == 0 ? &(GC->mmDumpVes) : &(GC->mmActL1));
+  const vector<string> *vec = (LC->mode == 0 ? &(GC->mmDumpVesTyp) : &(GC->mmActL1));
   if (*p > 0) *p -= 10;
   while (*p >= vec->size()) *p -= 10;
   return;
@@ -61,8 +61,14 @@ void ModuleMessagingExtMFD::Button_PRV() {
 // NXT = Next Page (Vars)
 void ModuleMessagingExtMFD::Button_NXT() {
   unsigned int *p = (LC->mode == 0 ? &(GC->ofsV) : &(GC->ofsA));
-  const vector<string> *vec = (LC->mode == 0 ? &(GC->mmDumpVes) : &(GC->mmActL1));
+  const vector<string> *vec = (LC->mode == 0 ? &(GC->mmDumpVesTyp) : &(GC->mmActL1));
   *p += 10;
   while (*p >= vec->size()) *p -= 10;
+  return;
+};
+
+// RST = Reset Activity log
+void ModuleMessagingExtMFD::Button_RST() {
+  GC->mm.RstLog();
   return;
 };

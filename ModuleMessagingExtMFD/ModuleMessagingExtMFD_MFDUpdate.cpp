@@ -3,7 +3,7 @@
 //	ModuleMessagingExtMFD (MFD Update)
 //	=====================
 //
-//	Copyright (C) 2016-2017	Andrew (ADSWNJ) Stokes
+//	Copyright (C) 2016-2018	Andrew (ADSWNJ) Stokes
 //                   All rights reserved
 //
 //	See ModuleMessagingExtMFD.cpp
@@ -39,8 +39,8 @@ bool ModuleMessagingExtMFD::Update(oapi::Sketchpad *skp)
     skpFormatText(0, l++, "Activity:");
   }
   unsigned int *p = (LC->mode == 0 ? &(GC->ofsV) : &(GC->ofsA));
-  const vector<string> *vec1 = (LC->mode == 0 ? &(GC->mmDumpVes) : &(GC->mmActL1));
-  const vector<string> *vec2 = (LC->mode == 0 ? &(GC->mmDumpModVarTyp) : &(GC->mmActL2));
+  const vector<string> *vec1 = (LC->mode == 0 ? &(GC->mmDumpVesTyp) : &(GC->mmActL1));
+  const vector<string> *vec2 = (LC->mode == 0 ? &(GC->mmDumpModVar) : &(GC->mmActL2));
 
   unsigned int i;
   char buf[128];

@@ -3,7 +3,7 @@
 //	ModuleMessagingExtMFD (MFD Button Management)
 //	================================
 //
-//	Copyright (C) 2016-2017	Andrew (ADSWNJ) Stokes
+//	Copyright (C) 2016-2018	Andrew (ADSWNJ) Stokes
 //                   All rights reserved
 //
 //	See ModuleMessagingExtMFD.cpp
@@ -22,12 +22,14 @@ ModuleMessagingExtMFD_Buttons::ModuleMessagingExtMFD_Buttons()
     {
       {"Mode Select", 0, 'M'},
       {"Prev Page", 0, 'P'},
-      {"Next Page", 0, 'N'}
+      {"Next Page", 0, 'N'},
+      {"Reset Activity Log", 0, 'R'}
     };
     RegisterPage(mnu0, sizeof(mnu0) / sizeof(MFDBUTTONMENU));
     RegisterFunction("MOD", OAPI_KEY_M, &ModuleMessagingExtMFD::Button_MOD);
     RegisterFunction("PRV", OAPI_KEY_P, &ModuleMessagingExtMFD::Button_PRV);
     RegisterFunction("NXT", OAPI_KEY_N, &ModuleMessagingExtMFD::Button_NXT);
+    RegisterFunction("RST", OAPI_KEY_N, &ModuleMessagingExtMFD::Button_RST);
 
     return;
 }
