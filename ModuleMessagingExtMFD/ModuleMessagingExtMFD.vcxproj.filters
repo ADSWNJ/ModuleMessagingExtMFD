@@ -45,6 +45,9 @@
     <ClInclude Include="ModuleMessagingExtMFD_Interface.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DisplayEngUnitFunctions.cpp">
@@ -90,5 +93,10 @@
     <None Include="README.md">
       <Filter>Misc</Filter>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="ModuleMessagingExtMFD.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
   </ItemGroup>
 </Project>

@@ -72,3 +72,9 @@ void ModuleMessagingExtMFD::Button_RST() {
   GC->mm.RstLog();
   return;
 };
+
+// FNT = Toggle Font Size
+void ModuleMessagingExtMFD::Button_FNT() {
+  LC->fontsize = 1 - LC->fontsize;
+  return;
+};

@@ -39,6 +39,7 @@ public:
   void Button_PRV();
   void Button_NXT();
   void Button_RST();
+  void Button_FNT();
 
 
   // Persistence functions
@@ -52,9 +53,10 @@ protected:
 
   oapi::IVECTOR2 iv[10000];
 
-  int _Line(const int row );
+  int _Line(const int row, const int maxrow = 25);
   int _Col(const int pos );
   int _Col2(const int pos );
+  void skpSetFont(oapi::Font *f);
   void skpFormatText(const int col, const int line, const char* fmt, ...);
   void skpFmtColText(const int col, const int line, const bool test, const DWORD truecol, const DWORD falsecol, const char* fmt, ...);
   void skpFmtEngText(const int col, const int line, const char* fmt, const char* sfx, const double val, const int dloB = 0);
@@ -63,7 +65,7 @@ protected:
   void skpColor(DWORD col);
   void showMessage();
 
-  oapi::Font *font;
+  oapi::Font *fontM, *fontS;
 
 };
 

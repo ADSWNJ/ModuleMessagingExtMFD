@@ -17,9 +17,9 @@
 #include <stdarg.h>
 
 // MFD Positioning Helper Functions
-int ModuleMessagingExtMFD::_Line(const int row) {  // row is 0-24, for 24 rows. e.g. Line(12)
+int ModuleMessagingExtMFD::_Line(const int row, const int maxrow) {  // row is 0-24, for 24 rows. e.g. Line(12)
   int ret;
-  ret = (int)((H - (int)(ch / 4)) * row / 25) + (int)(ch / 4);
+  ret = (int)((H - (int)(ch / 4)) * row / maxrow) + (int)(ch / 4);
   return ret;
 };
 
@@ -59,6 +59,10 @@ void ModuleMessagingExtMFD::skpFmtColText(const int col, const int line, const b
 
 void ModuleMessagingExtMFD::skpColor(const DWORD col) {
   LC->skp->SetTextColor(col);
+}
+
+void ModuleMessagingExtMFD::skpSetFont(oapi::Font *f) {
+  LC->skp->SetFont(f);
 }
 
 void ModuleMessagingExtMFD::skpFmtEngText(const int col, const int line, const char* fmt, const char* sfx, const double val, const int dloB) {

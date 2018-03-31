@@ -55,7 +55,7 @@
 
 ModuleMessagingExtMFD_GCore *g_SC = nullptr;    // points to the static persistence core
 char *g_moduleName = "MMExtMFD";
-char *g_moduleVersion = "1.0";
+char *g_moduleVersion = "1.0a";
 char *g_moduleCompileDate = __DATE__;
 
 // ====================================================================================================================
@@ -84,14 +84,16 @@ ModuleMessagingExtMFD::ModuleMessagingExtMFD (DWORD w, DWORD h, VESSEL *vessel, 
   }
 
   // Any construction for the display side of this MFD instance
-  font = oapiCreateFont (h/25, true, "Fixed", FONT_NORMAL, 0);
+  fontM = oapiCreateFont (h/25, true, "Fixed", FONT_NORMAL, 0);
+  fontS = oapiCreateFont(h/35, true, "Fixed", FONT_NORMAL, 0);
 
   return;
 }
 
 ModuleMessagingExtMFD::~ModuleMessagingExtMFD ()
 {
-  oapiReleaseFont(font);
+  oapiReleaseFont(fontM);
+  oapiReleaseFont(fontS);
   return;
 }
 

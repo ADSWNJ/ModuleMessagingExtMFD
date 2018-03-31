@@ -21,9 +21,9 @@ bool ModuleMessagingExtMFD::Update(oapi::Sketchpad *skp)
   LC->skp = skp;
 
   //LC->skp->SetTextColor(CLR_DEF);
-
+  skpSetFont(fontM);
   if (LC->showMessage) return DisplayMessageMode();
-  skpTitle("MMExtMFD");
+  skpTitle("MMExtMFD v1.1");
 
   int l = 2;
   if (GC->mmVer != "") {
@@ -44,6 +44,8 @@ bool ModuleMessagingExtMFD::Update(oapi::Sketchpad *skp)
 
   unsigned int i;
   char buf[128];
+
+  if (LC->fontsize == 1) skpSetFont(fontS);
 
   l = 5;
   for (i = *p; i < vec1->size() && i < *p + 10; i++) {

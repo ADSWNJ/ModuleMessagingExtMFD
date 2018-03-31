@@ -23,13 +23,15 @@ ModuleMessagingExtMFD_Buttons::ModuleMessagingExtMFD_Buttons()
       {"Mode Select", 0, 'M'},
       {"Prev Page", 0, 'P'},
       {"Next Page", 0, 'N'},
-      {"Reset Activity Log", 0, 'R'}
+      {"Reset Activity Log", 0, 'R'},
+      {"Toggle Font Size", 0, 'F' }
     };
     RegisterPage(mnu0, sizeof(mnu0) / sizeof(MFDBUTTONMENU));
     RegisterFunction("MOD", OAPI_KEY_M, &ModuleMessagingExtMFD::Button_MOD);
     RegisterFunction("PRV", OAPI_KEY_P, &ModuleMessagingExtMFD::Button_PRV);
     RegisterFunction("NXT", OAPI_KEY_N, &ModuleMessagingExtMFD::Button_NXT);
-    RegisterFunction("RST", OAPI_KEY_N, &ModuleMessagingExtMFD::Button_RST);
+    RegisterFunction("RST", OAPI_KEY_R, &ModuleMessagingExtMFD::Button_RST);
+    RegisterFunction("FNT", OAPI_KEY_F, &ModuleMessagingExtMFD::Button_FNT);
 
     return;
 }

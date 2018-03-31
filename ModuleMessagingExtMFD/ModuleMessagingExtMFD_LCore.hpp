@@ -45,7 +45,7 @@ class ModuleMessagingExtMFD_LCore {
     string Message;
     int mode;
 
-
+    int fontsize;
     oapi::Sketchpad *skp; // points to local sketchpad for this MFD and vessel
     int skpLoB;           // Lowest precision for skp eng numnber formatting
     char skpBuf[128];     // Formatting buffer for MFD updates
