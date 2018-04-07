@@ -36,13 +36,53 @@ void ModuleMessagingExtMFD_GCore::corePreStep(double simT,double simDT,double mj
     int ix = 0;
     char typ;
     string mod, var, vesName, msg, objdesc;
-    OBJHANDLE ovh;
-    list<string> mmListVesTyp, mmListModVar;
-    while (mm.Find(&typ, &mod, &var, &ovh, &ix, "*", "*", NULL, false)) {
-      if (typ == 'o') {
-        OBJHANDLE oh;
-        bool ret = mm.Get(mod, var, &oh); 
-        int ot = mm.ObjType(oh);
+    OBJHANDLE ohv;
+    list<string> mmListVesTyp, mmListModVar, mmListData;
+    bool valB;
+    int valI;
+    double valD;
+    string valS;
+    VECTOR3 valV;
+    MATRIX3 val3;
+    MATRIX4 val4;
+    OBJHANDLE valO;
+    char ptrbuf[20];
+    int ot;
+
+    while (mm.Find(&typ, &mod, &var, &ohv, &ix, "*", "*", NULL, false)) {
+      objdesc = typ;
+      switch (typ) {
+      case 'b':
+        mm.Get(mod, var, &valB, ohv);
+        mmListData.push_back(valB ? "true" : "false");
+        break;
+      case 'i':
+        mm.Get(mod, var, &valI, ohv);
+        mmListData.push_back(to_string(valI));
+        break;
+      case 'd':
+        mm.Get(mod, var, &valD, ohv);
+        mmListData.push_back(to_string(valD));
+        break;
+      case 's':
+        mm.Get(mod, var, &valS, ohv);
+        mmListData.push_back(valS);
+        break;
+      case 'v':
+        mm.Get(mod, var, &valV, ohv);
+        mmListData.push_back(to_string(valV.x) + "," +to_string(valV.y) + "," + to_string(valV.z));
+        break;
+      case '3':
+        mm.Get(mod, var, &val3, ohv);
+        mmListData.push_back(to_string(val3.m11) + "," + to_string(val3.m12) + "," + to_string(val3.m13) + "...");
+        break;
+      case '4':
+        mm.Get(mod, var, &val4, ohv);
+        mmListData.push_back(to_string(val4.m11) + "," + to_string(val4.m12) + "," + to_string(val4.m13) + "...");
+        break;
+      case 'o':
+        mm.Get(mod, var, &valO, ohv);
+        ot = mm.ObjType(valO);
         switch (ot) {
         case -1:             objdesc = "o-err"; break;
         case OBJTP_INVALID:  objdesc = "o-inv"; break;
@@ -53,24 +93,30 @@ void ModuleMessagingExtMFD_GCore::corePreStep(double simT,double simDT,double mj
         case OBJTP_VESSEL:   objdesc = "o-ves"; break;
         case OBJTP_SURFBASE: objdesc = "o-base"; break;
         }
-      } else {
-        objdesc = typ;
-      }
-      if (typ == 'x') {
+        sprintf(ptrbuf, "%p", valO);
+        mmListData.push_back("0x" + string(ptrbuf));
+        break;
+      case 'x':
         objdesc = "struct";
-      }
-      if (typ == 'y') {
+        mmListData.push_back("");
+        break;
+      case 'y':
         objdesc = "old struct";
+        mmListData.push_back("");
+        break;
       }
-      msg = string() + oapiGetVesselInterface(ovh)->GetName() + " (" + objdesc + ")";
+
+      msg = string() + oapiGetVesselInterface(ohv)->GetName() + " (" + objdesc + ")";
       mmListVesTyp.push_back(msg);
-      mmListModVar.push_back(mod + ":" + var);
+      mmListModVar.push_back(mod + "::" + var);
+
     }
 
     int siz;
     siz = mmListVesTyp.size();
     mmDumpVesTyp.resize(mmListVesTyp.size());
-    mmDumpModVar.resize(mmListVesTyp.size());
+    mmDumpModVar.resize(mmListModVar.size());
+    mmDumpData.resize(mmListData.size());
     int i = 0;
     for (auto& e : mmListVesTyp) {
       mmDumpVesTyp[i++] = e;
@@ -78,6 +124,10 @@ void ModuleMessagingExtMFD_GCore::corePreStep(double simT,double simDT,double mj
     i = 0;
     for (auto& e : mmListModVar) {
       mmDumpModVar[i++] = e;
+    }
+    i = 0;
+    for (auto& e : mmListData) {
+      mmDumpData[i++] = e;
     }
     mmActL1.clear();
     mmActL2.clear();
@@ -99,7 +149,7 @@ void ModuleMessagingExtMFD_GCore::corePreStep(double simT,double simDT,double mj
       act = act + " " + rves;
       if (!rsucc) act = act + " (f)";
       mmActL1.push_back(rcli + " " + act);
-      mmActL2.push_back(rmod + ":" + rvar);
+      mmActL2.push_back(rmod + "::" + rvar);
     }
   }
 }

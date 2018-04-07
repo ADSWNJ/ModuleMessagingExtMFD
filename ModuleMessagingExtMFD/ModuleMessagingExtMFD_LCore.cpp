@@ -24,6 +24,7 @@ ModuleMessagingExtMFD_LCore::ModuleMessagingExtMFD_LCore(VESSEL *vin, UINT mfdin
   showMessage = false;
   okMessagePage = true;
   mode = 0;
+  entPerPage = 10;
   fontsize = 0;
   return;
 }

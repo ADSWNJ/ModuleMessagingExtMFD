@@ -40,6 +40,7 @@ class ModuleMessagingExtMFD_GCore {
     MMExt2::Advanced mm;
     vector<string> mmDumpVesTyp;
     vector<string> mmDumpModVar;
+    vector<string> mmDumpData;
     vector<string> mmActL1;
     vector<string> mmActL2;
     string mmVer;

@@ -44,6 +44,14 @@ class ModuleMessagingExtMFD_LCore {
     bool okMessagePage;
     string Message;
     int mode;
+    int entPerPage;
+
+    // COLORS: BB GG RR
+    //                               RR    GG          BB
+    static const DWORD COL_WHITE   = 255 + 255 * 256 + 255 * 256 * 256;
+    static const DWORD COL_AQUA    = 120 + 219 * 256 + 226 * 256 * 256;
+    static const DWORD COL_MAGENTA = 255 +  29 * 256 + 206 * 256 * 256;
+
 
     int fontsize;
     oapi::Sketchpad *skp; // points to local sketchpad for this MFD and vessel

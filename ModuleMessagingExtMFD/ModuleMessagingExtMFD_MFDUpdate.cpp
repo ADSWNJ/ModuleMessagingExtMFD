@@ -23,7 +23,7 @@ bool ModuleMessagingExtMFD::Update(oapi::Sketchpad *skp)
   //LC->skp->SetTextColor(CLR_DEF);
   skpSetFont(fontM);
   if (LC->showMessage) return DisplayMessageMode();
-  skpTitle("MMExtMFD v1.1");
+  skpTitle("MMExtMFD v1.2");
 
   int l = 2;
   if (GC->mmVer != "") {
@@ -33,14 +33,20 @@ bool ModuleMessagingExtMFD::Update(oapi::Sketchpad *skp)
     return true;
   }
 
-  if (LC->mode == 0) {
-    skpFormatText(0, l++, "Data:");
-  } else {
+  switch (LC->mode) {
+  case 0:
+    skpFormatText(0, l++, "Variables:");
+    break;
+  case 1:
     skpFormatText(0, l++, "Activity:");
+    break;
+  case 2:
+    skpFormatText(0, l++, "Data:");
+    break;
   }
-  unsigned int *p = (LC->mode == 0 ? &(GC->ofsV) : &(GC->ofsA));
-  const vector<string> *vec1 = (LC->mode == 0 ? &(GC->mmDumpVesTyp) : &(GC->mmActL1));
-  const vector<string> *vec2 = (LC->mode == 0 ? &(GC->mmDumpModVar) : &(GC->mmActL2));
+  unsigned int *p = (LC->mode == 1 ? &(GC->ofsA) : &(GC->ofsV));
+  const vector<string> *vec1 = (LC->mode == 1 ? &(GC->mmActL1) : &(GC->mmDumpVesTyp));
+  const vector<string> *vec2 = (LC->mode == 1 ? &(GC->mmActL2) : &(GC->mmDumpModVar));
 
   unsigned int i;
   char buf[128];
@@ -48,13 +54,21 @@ bool ModuleMessagingExtMFD::Update(oapi::Sketchpad *skp)
   if (LC->fontsize == 1) skpSetFont(fontS);
 
   l = 5;
-  for (i = *p; i < vec1->size() && i < *p + 10; i++) {
+  for (i = *p; i < vec1->size() && i < *p + LC->entPerPage; i++) {
+    skpColor(LC->COL_WHITE);
     sprintf(buf, "%2u. %s", i+1, (*vec1)[i].c_str());
     skpFormatText(0, l++, buf);
+    skpColor(LC->COL_AQUA);
     sprintf(buf, "    %s", (*vec2)[i].c_str());
     skpFormatText(0, l++, buf);
+    if (LC->mode == 2) {
+      skpColor(LC->COL_MAGENTA);
+      sprintf(buf, "    %s", GC->mmDumpData[i].c_str());
+      skpFormatText(0, l++, buf);
+    }
   }
-  if (vec1->size()>*p + 10) skpFormatText(0, 25, "...");
+  skpColor(LC->COL_WHITE);
+  if (vec1->size()>*p + LC->entPerPage) skpFormatText(0, l, "...");
 
   return true;
 };

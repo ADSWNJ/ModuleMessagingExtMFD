@@ -44,26 +44,29 @@ bool ModuleMessagingExtMFD::ConsumeKeyBuffered (DWORD key) {
 //
 
 // MOD = Mode Select
-void ModuleMessagingExtMFD::Button_MOD() {
-  LC->mode = 1 - LC->mode;
+void ModuleMessagingExtMFD::Button_MOD() {    // mode 0 = vars, 1 = avtivity, 2 = data
+  if (++LC->mode == 3) LC->mode = 0;
+  LC->entPerPage = (LC->mode == 2 ? 6 : 10);
   return;
 };
 
 // PRV = Last Page (Vars)
 void ModuleMessagingExtMFD::Button_PRV() {
-  unsigned int *p = (LC->mode == 0 ? &(GC->ofsV) : &(GC->ofsA));
-  const vector<string> *vec = (LC->mode == 0 ? &(GC->mmDumpVesTyp) : &(GC->mmActL1));
-  if (*p > 0) *p -= 10;
-  while (*p >= vec->size()) *p -= 10;
+  unsigned int *p = (LC->mode == 1 ? &(GC->ofsA) : &(GC->ofsV));
+  const vector<string> *vec = (LC->mode == 1 ? &(GC->mmActL1)  : &(GC->mmDumpVesTyp));
+  if (*p > 0) *p -= LC->entPerPage;
+  while (*p >= vec->size()) *p -= LC->entPerPage;
+  if (*p < 0) *p = 0;
   return;
 };
 
 // NXT = Next Page (Vars)
 void ModuleMessagingExtMFD::Button_NXT() {
-  unsigned int *p = (LC->mode == 0 ? &(GC->ofsV) : &(GC->ofsA));
-  const vector<string> *vec = (LC->mode == 0 ? &(GC->mmDumpVesTyp) : &(GC->mmActL1));
-  *p += 10;
-  while (*p >= vec->size()) *p -= 10;
+  unsigned int *p = (LC->mode == 1 ? &(GC->ofsA) : &(GC->ofsV));
+  const vector<string> *vec = (LC->mode == 1 ? &(GC->mmActL1) : &(GC->mmDumpVesTyp));
+  *p += LC->entPerPage;
+  while (*p >= vec->size()) *p -= LC->entPerPage;
+  if (*p < 0) *p = 0;
   return;
 };
 
