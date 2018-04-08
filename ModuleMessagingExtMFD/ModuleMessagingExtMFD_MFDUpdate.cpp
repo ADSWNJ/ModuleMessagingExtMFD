@@ -23,7 +23,7 @@ bool ModuleMessagingExtMFD::Update(oapi::Sketchpad *skp)
   //LC->skp->SetTextColor(CLR_DEF);
   skpSetFont(fontM);
   if (LC->showMessage) return DisplayMessageMode();
-  skpTitle("MMExtMFD v1.2");
+  skpTitle("MMExtMFD v2.1");
 
   int l = 2;
   if (GC->mmVer != "") {

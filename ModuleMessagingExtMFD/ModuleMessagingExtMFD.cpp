@@ -55,7 +55,7 @@
 
 ModuleMessagingExtMFD_GCore *g_SC = nullptr;    // points to the static persistence core
 char *g_moduleName = "MMExtMFD";
-char *g_moduleVersion = "1.0a";
+char *g_moduleVersion = "2.1";
 char *g_moduleCompileDate = __DATE__;
 
 // ====================================================================================================================
