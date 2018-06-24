@@ -52,20 +52,24 @@ void ModuleMessagingExtMFD::Button_MOD() {    // mode 0 = vars, 1 = avtivity, 2 
 
 // PRV = Last Page (Vars)
 void ModuleMessagingExtMFD::Button_PRV() {
-  unsigned int *p = (LC->mode == 1 ? &(GC->ofsA) : &(GC->ofsV));
+  int *p = (int*) (LC->mode == 1 ? &(GC->ofsA) : &(GC->ofsV));
   const vector<string> *vec = (LC->mode == 1 ? &(GC->mmActL1)  : &(GC->mmDumpVesTyp));
   if (*p > 0) *p -= LC->entPerPage;
-  while (*p >= vec->size()) *p -= LC->entPerPage;
+  while (*p >= (int) vec->size()) {
+    *p -= LC->entPerPage;
+  }
   if (*p < 0) *p = 0;
   return;
 };
 
 // NXT = Next Page (Vars)
 void ModuleMessagingExtMFD::Button_NXT() {
-  unsigned int *p = (LC->mode == 1 ? &(GC->ofsA) : &(GC->ofsV));
+  int *p = (int*) (LC->mode == 1 ? &(GC->ofsA) : &(GC->ofsV));
   const vector<string> *vec = (LC->mode == 1 ? &(GC->mmActL1) : &(GC->mmDumpVesTyp));
   *p += LC->entPerPage;
-  while (*p >= vec->size()) *p -= LC->entPerPage;
+  while (*p >= (int)vec->size()) {
+    *p -= LC->entPerPage;
+  }
   if (*p < 0) *p = 0;
   return;
 };
